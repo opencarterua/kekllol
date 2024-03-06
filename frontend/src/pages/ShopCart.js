@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-const Cart = ({ cartItems, setCartItems, closeCart }) => {
+import './CartPage.css';  // Импортируйте файл стилей
+
+function CartPage() {
+  const { cartItems: encodedCartItems } = useParams();
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    if (encodedCartItems) {
+      const decodedCartItems = JSON.parse(decodeURIComponent(encodedCartItems));
+      setCartItems(decodedCartItems);
+    }
+  }, [encodedCartItems]);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
 
-  // ...
-
   const handleQuantityChange = (productId, newQuantity) => {
-    // Обновление количества товара в корзине
     const updatedCartItems = cartItems.map((item) =>
       item.id === productId ? { ...item, quantity: newQuantity } : item
     );
@@ -17,13 +27,11 @@ const Cart = ({ cartItems, setCartItems, closeCart }) => {
   };
 
   const handleRemoveItem = (productId) => {
-    // Удаление товара из корзины
     const updatedCartItems = cartItems.filter((item) => item.id !== productId);
     setCartItems(updatedCartItems);
   };
 
   const calculateTotal = () => {
-    // Расчет общей суммы товаров в корзине
     return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
   };
 
@@ -73,12 +81,10 @@ const Cart = ({ cartItems, setCartItems, closeCart }) => {
             <span>Total: {calculateTotal()} UAH</span>
           </div>
         </div>
-        <button className="close-cart" onClick={closeCart}>
-          Close Cart
-        </button>
+        <button className="close-cart">Close Cart</button>
       </div>
     </div>
   );
-};
+}
 
-export default Cart;
+export default CartPage;

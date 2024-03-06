@@ -1,0 +1,33 @@
+.cart {
+	display: flex;
+	justify-content: space-between;
+}
+
+.cart-form {
+	flex: 1;
+	padding: 10px;
+	border: 1px solid red;
+	justify-content: center;
+	padding: 50px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+label {
+	font-size: 30px;
+}
+
+input {
+	font-size: 30px;
+}
+
+.cart-items {
+	flex: 1;
+	padding: 10px;
+}
+
+/* Добавьте другие стили, если необходимо */

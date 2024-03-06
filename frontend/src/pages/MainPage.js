@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { Link } from 'react-router-dom';
+
 
 function MainPage() {
   const [stores, setStores] = useState([]);
@@ -40,7 +42,8 @@ function MainPage() {
       );
 
       setCartItems(updatedCartItems);
-    } else {
+    }
+    else {
       // Если товара нет в корзине, добавляем новый экземпляр
       const updatedCartItems = [...cartItems, { id: product._id, product, quantity: 1 }];
       setCartItems(updatedCartItems);
@@ -51,6 +54,10 @@ function MainPage() {
   const isProductInCart = (productId) => {
     return cartItems.some((item) => item.id === productId);
   };
+
+  useEffect(() => {
+    console.log('Cart Items:', cartItems);
+  }, [cartItems]);
 
   return (
     <div className="app">
@@ -69,7 +76,9 @@ function MainPage() {
         <div className='carttitle'>
           <h2>Products in {selectedStore}</h2>
           <div className="my-cart">
-            <button className='cartBtnMain'>{`My Cart (${cartItems.length})`}</button>
+            <Link to={`/cart/${encodeURIComponent(JSON.stringify(cartItems))}`}>
+              <button className='cartBtnMain'>{`My Cart (${cartItems.length})`}</button>
+            </Link>
           </div>
         </div>
         <ul className='product-list'>
